@@ -5,6 +5,10 @@ from rest_framework.response import Response
 from . import serializers
 from rest_framework import status
 
+from profiles_api import models
+
+from profiles_api import permissions
+from rest_framework.authentication import TokenAuthentication
 
 class HelloViewSets(viewsets.ViewSet):
     """Test APi View sets"""
@@ -92,3 +96,19 @@ class HelloApiView(APIView):
         """ Deletes an object"""
 
         return Response({'method': 'delete'})
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """Handles creating and updating user profiles"""
+
+
+    serializer_class = serializers.UserProfileSerializer
+    queryset = models.UserProfile.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnProfile,)
+
+
+
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (permissions.UpdateOwnProfile,)
+    # filter_backends = (filters.SearchFilter,)
+    # search_fields = ('name','email',)
