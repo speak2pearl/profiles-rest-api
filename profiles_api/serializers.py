@@ -16,7 +16,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password':{
                 'write_only':True,
-                'style' : {'imput_type':'password'}
+                'style' : {'input_type':'password'}
             },
         }
 
@@ -37,3 +37,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
             instance.set_password(password)
 
         return super().update(instance, validated_data)
+
+class ProfileFeedItemsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.ProfileFeedItems
+        fields = ('id','user_profile','status_text','created_on')
+        extra_kwargs = {
+            'user_profile' : {'read_only' : True}
+        }
