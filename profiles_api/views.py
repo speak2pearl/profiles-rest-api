@@ -12,7 +12,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
 
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 
 class HelloViewSets(viewsets.ViewSet):
@@ -122,9 +122,7 @@ class UserProfileFeedViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.ProfileFeedItemsSerializer
     queryset = models.ProfileFeedItems.objects.all()
-    permission_classes = (
-            permissions.UpdateOwnStatus,
-            IsAuthenticatedOrReadOnly)
+    permission_classes = (permissions.UpdateOwnStatus,IsAuthenticated)
 
     def perform_create(self, serializers):
 
